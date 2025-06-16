@@ -7,6 +7,11 @@ namespace OpenCreativeSoftware {
 		this->id = time(nullptr);
 	}
 
+	void ProjectLib::TimelineSpecificDataV1::Import(pugi::xml_node& t_node) {
+		auto v1Node = t_node.child("ProjectData").child("V1");
+		id = v1Node.child("ID").text().as_ullong();
+	}
+
 	void ProjectLib::TimelineSpecificDataV1::Export(pugi::xml_node& t_node) {
 		auto v1Node = t_node.append_child("V1");
 		v1Node.append_child("ID").append_child(pugi::node_pcdata).set_value(std::to_string(id));

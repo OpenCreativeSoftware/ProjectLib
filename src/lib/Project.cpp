@@ -3,7 +3,7 @@
 #include "SoftwareSpecific/Timeline/TimelineSpecificData.h"
 
 namespace OpenCreativeSoftware {
-	
+
 	void ProjectLib::Project::Destroy() {
 		DestroyHeader();
 		DestroyData();
@@ -20,7 +20,7 @@ namespace OpenCreativeSoftware {
 		if (!data.ptr) return;
 		if (!header) return;
 		if (header->type == ProjectType::Timeline && data.ptr) {
-			auto timelineData = (TimelineSpecificData*) data.ptr;
+			auto timelineData = (TimelineSpecificData*)data.ptr;
 			timelineData->Destroy();
 			delete timelineData;
 		}
@@ -30,13 +30,17 @@ namespace OpenCreativeSoftware {
 		data = ProjectData();
 	}
 
-	ProjectLib::Project ProjectLib::Project::CreateTimelineProject() {
-		Project result;
-		result.header = new GeneralProjectHeader();
-		result.header->name = "New Timeline Project";
-		result.data.type = result.header->type = ProjectType::Timeline;
-		result.data.ptr = (SoftwareSpecificData*) new TimelineSpecificData();
+	ProjectLib::Project BaseCreateProject(std::string t_name, ProjectLib::ProjectType t_type, ProjectLib::SoftwareSpecificData* t_data) {
+		ProjectLib::Project result;
+		result.header = new ProjectLib::GeneralProjectHeader();
+		result.header->name = t_name;
+		result.data.type = result.header->type = t_type;
+		result.data.ptr = t_data;
 		return result;
+	}
+
+	ProjectLib::Project ProjectLib::Project::CreateTimelineProject() {
+		return BaseCreateProject("New Timeline Project", ProjectType::Timeline, reinterpret_cast<SoftwareSpecificData*>(new TimelineSpecificData()));
 	}
 
 	ProjectLib::Project ProjectLib::Project::CreateRasterProject() {

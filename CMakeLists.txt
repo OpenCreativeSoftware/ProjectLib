@@ -19,6 +19,7 @@ set(ProjectLib_Sources
 	src/lib/GeneralProjectHeader.cpp
     src/lib/Project.cpp
 	src/lib/XMLExport.cpp
+	src/lib/OCSExport.cpp
 	src/lib/SoftwareSpecific/Timeline/TimelineSpecificData.cpp)
 
 set(ProjectLib_Headers
@@ -26,6 +27,8 @@ set(ProjectLib_Headers
 	include/Common.h
 	include/GeneralProjectHeader.h
 	include/Project.h
+	include/XMLExport.h
+	include/OCSExport.h
 	include/SoftwareSpecific/Timeline/TimelineSpecificData.h)
 
 add_library(ProjectLib SHARED ${ProjectLib_Sources} ${ProjectLib_Headers})
